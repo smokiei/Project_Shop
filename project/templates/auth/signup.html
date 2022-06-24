@@ -1,0 +1,25 @@
+{% from 'bootstrap4/form.html' import render_form %}
+{% from 'bootstrap4/utils.html' import render_messages %}
+<!-- templates/signup.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<!-- ====== Banner Start ====== -->
+<section class="ud-page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-banner-content">
+                    <h1>Реєстрація</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ====== Banner End ====== -->
+<main class="form-signin text-center ">
+    {{ render_messages() }}
+    {{ render_form(signup_form, button_style='w-100 btn btn-lg btn-primary') }}
+</main>
+{% endblock %}

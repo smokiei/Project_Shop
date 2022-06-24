@@ -1,0 +1,136 @@
+{% from 'bootstrap4/form.html' import render_form, render_form_row %}
+{% from 'macros.html' import render_accordion_item %}
+
+{% macro render_accordion_manufacturer(cat) -%}
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-{{cat.CategoryId}}"
+                aria-expanded="false" aria-controls="panelsStayOpen-{{cat.CategoryId}}">
+            Виробник
+        </button>
+    </h2>
+    <div class="accordion-collapse collapse"
+         id="panelsStayOpen-{{cat.CategoryId}}"
+         aria-labelledby="panelsStayOpen-{{cat.CategoryId}}">
+        <div class="accordion-body">
+            <div class="form-check">
+                <select class="form-control filter-manufacturer">
+                    <option value="0">Будь-який</option>
+                    {% for m in manufacturers %}
+                    <option value="{{m.ManufacturerId}}">{{m.CompanyName}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+
+
+{% macro render_filter_row(attribute) -%}
+{% call render_accordion_item('filter-by-attribute-' ~ attribute.AttributeId, attribute.AttributeTitle) %}
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="">
+    <label class="form-check-label" for="flexCheckDefault">
+        Default checkbox
+    </label>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" checked>
+    <label class="form-check-label" for="flexCheckChecked">
+        Checked checkbox
+    </label>
+</div>
+{% endcall %}
+{%- endmacro %}
+
+{% macro render_filter_block(category) -%}
+<div class="b-cwp-bi-side">
+    <div class="accordion" id="filters-{{category.CategoryId}}">
+        {{ render_accordion_manufacturer(category) }}
+
+        <form method="post">
+            {{ filter_form.csrf_token() }}
+            {% for ac in category.attributes_by_categories %}
+            {{render_filter_row(ac.Attribute)}}
+            {% endfor %}
+            <button id="filter-button-{{category.CategoryId}}" data-category="{{category.CategoryId}}"
+                    type="button" class="filter btn btn-primary">Застосувати
+            </button>
+        </form>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro render_attribute_row(productAttribute) -%}
+{{productAttribute.Attribute.AttributeTitle}}:&nbsp;
+<a href="/processor/filter/socket-am4/" target="_blank">{{productAttribute.AttributeValue}}</a><br>
+{%- endmacro %}
+
+{% macro render_product_section(cat) -%}
+{% call render_accordion_item('cat-' ~ cat.CategoryId, cat.CategoryName) %}
+<div class="b-cwp-body-inner-pad" style="display: table;">
+    {{ render_filter_block(cat) }}
+    <div class="b-cwp-bi-main">
+        <div class="b-catalog-top-info b-no-border">
+            <div class="b-pagehead"><span class="b-head">{{ cat.CategoryName }}</span></div>
+            <ul class="b-cwp-bi-result-list" id="product-block-{{ cat.CategoryId }}">
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+{% endcall %}
+{%- endmacro %}
+
+
+{% extends 'base.html' %}
+{% block title %}
+<title>shop</title>
+{% endblock %}
+
+{% block content %}
+<!-- ====== Banner Start ====== -->
+<section class="ud-page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-banner-content">
+                    <h1>Конфігуратор комп'ютера</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ====== Banner End ====== -->
+<main>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="b-config-head-fscr-mob">
+                <div class="b-head">Збірка конфігурації ПК з нуля</div>
+            </div>
+            <div class="accordion" id="accordionExample">
+                {% for cat in allCategories %}
+                {{ render_product_section(cat) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/product-renderer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/configurator.js') }}"></script>
+<script>
+    let opts ={
+        'baseUrl' : 'http://127.0.0.1:5000/api',
+        'token' : '{{ session['debug_access_token'] }}'
+    }
+    shop_configurator(opts)
+
+
+
+</script>
+{% endblock %}

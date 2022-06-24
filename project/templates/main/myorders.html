@@ -1,0 +1,52 @@
+{% from 'bootstrap4/table.html' import render_table %}
+<!-- templates/profile.html -->
+
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- ====== Banner Start ====== -->
+<section class="ud-page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-banner-content">
+                    <h1>{{ current_user.UserName }}. Мої замовлення</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ====== Banner End ====== -->
+<!-- ====== add extends of orders later ====== -->
+<main>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <h1 class="title">Мої замовлення</h1>
+            {% for ord in my_orders %}
+             <h2 class="title">заказ номер {{ ord.OrderId }} {{ ord.CreatedByUser }} от {{ ord.CreatedWhen }} на сумму {{ ord.totalamount() }}   </h2>
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <td>Найменування</td>
+                        <td>Виробник</td>
+                        <td>Ціна</td>
+                        <td>Створено</td>
+                    </tr>
+                </thead>
+
+                {% for ProdInOrd in ord.products_in_orders %}
+                <tr>
+                    <td>{{ ProdInOrd.Product.Title }}</td>
+                    <td>{{ ProdInOrd.Product.Manufacturer.CompanyName }}</td>
+                    <td>{{ ProdInOrd.Product.Price }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

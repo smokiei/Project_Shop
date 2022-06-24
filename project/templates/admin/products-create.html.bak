@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+ <title>shop</title>
+{% endblock %}
+
+{% block content %}
+<!-- ====== Banner Start ====== -->
+    <section class="ud-page-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ud-banner-content">
+              <h1>Add</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ====== Banner End ====== -->
+<main class="form-signin text-center" >
+
+  <form method="POST" action="/create" class=" p-5" enctype="multipart/form-data">
+      <div class="col-12 p-2">
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
+           <input type="file" name="pic" />
+   <input type="submit" value="Upload a file"/>
+              <label for="title" class="form-label">Title</label>
+              <div class="input-group has-validation">
+
+                <input type="text" class="form-control" id="title" placeholder="title" required="" name="title">
+              <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+       </div>
+      <div class="col-12 p-2">
+              <label for="title" class="form-label">Price</label>
+              <div class="input-group has-validation">
+
+                  <input type="number" class="form-control" name="price" id="price" placeholder="price">
+                  <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+       </div>
+
+
+    <button class="btn btn-success w-100 btn-primary btn-lg p-2" type="submit">Додати товар</button>
+  </form>
+  </main>
+{% endblock %}

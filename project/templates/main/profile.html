@@ -1,0 +1,40 @@
+{% from 'bootstrap4/table.html' import render_table %}
+<!-- templates/profile.html -->
+
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- ====== Banner Start ====== -->
+<section class="ud-page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-banner-content">
+                    <h1>Особистий кабінет адміністратора</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ====== Banner End ====== -->
+<main class=" text-center ">
+    <h1 class="title">
+        Доброго дня, {{ current_user.UserName }}!
+        <br>
+        <br>
+        <br>
+    </h1>
+
+    <h2 class="title">
+        Ваша пошта: {{ current_user.Email }}
+        <br>
+        <br>
+        <br>
+    </h2>
+
+   <h2 class="title">
+        Ваш токен:  {{ session['debug_access_token'] }}
+    </h2>
+</main>
+{% endblock %}

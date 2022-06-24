@@ -1,0 +1,844 @@
+{% macro sideFilter(category) -%}
+{{category.attributes_by_categories[0]}}
+<div class="b-cwp-bi-side">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne"
+                        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    Виробник
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne"
+                 class="accordion-collapse collapse show"
+                 aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Default checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Checked checkbox
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                    Кількість ядер
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                 aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Default checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Checked checkbox
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseThree"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseThree">
+                    Тип роз'єму (socket)
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                 aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Default checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value=""
+                               id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Checked checkbox
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary">Застосувати</button>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro productAttribute(productAttribute) -%}
+    {{productAttribute.Attribute.AttributeTitle}}:&nbsp;
+    <a href="/processor/filter/socket-am4/" target="_blank">{{productAttribute.AttributeValue}}</a><br>
+{%- endmacro %}
+
+{% macro productCard(product) -%}
+<li class="b-item" data-id_product="{{product.ProductId}}" data-price="{{product.Price}}">
+    <div class="b-cng-item-prod product_wrapper" data-id_product="{{product.ProductId}}"
+         data-prod-id="{{product.ProductId}}" data-prod-articul="{{product.ProductId}}"
+         data-prod-name="{{product.Title}}"
+         data-prod-brand="{{product.Manufacturer.CompanyName}}--AMD--" data-prod-variant=""
+         data-prod-type="Процессоры" data-prod-category="--Процессоры/AMD--"
+         data-prod-price="{{product.Price}}" data-prod-list="Конфигуратор"
+         data-prod-position="">
+
+        <div class="b-cngip-pic">
+            <a href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/"
+               target="_blank">
+                <img src="{{ product.photos[0].file_path() }}"
+                     width="100" height="100"
+                     alt="Фото Процесор {{product.Title}}">
+            </a>
+        </div>
+        <div class="b-cngip-mid-col">
+            <div class="meta hidden"></div>
+            <div class="b-cngip-head">
+                <a target="_blank" href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/">{{product.Title}}</a>
+            </div>
+            <div class="b-cngip-mc-meta">
+                <div class="b-i-product-articul">Код: <i>{{product.ProductId}}</i></div>
+                <div class="b-cngip-short-chars">
+                    <p>Виробник: <a href="/processor/filter/amd-ryzen-r5/" target="_blank">{{product.Manufacturer.CompanyName}}</a><br>
+                        {% for pa in product.products_attributes %}
+                        {{ productAttribute(pa) }}
+                        {% endfor %}
+                        Сумісність: <a href="/motherboard/filter/socket-am4/" target="_blank">Материнські плати Socket AM4</a><br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="b-cngip-meta-col">
+            <div class="b-cngip-price">{{product.Price}}<i>грн</i></div>
+        </div>
+        <div class="b-cngip-meta-btn">
+            <ul class="b-htconf-btns-list">
+                <li>
+                    <a class="b-cngip-btn-add add_assembly_product"
+                       href="javascript: AlertMsg();">Додати</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</li>
+{%- endmacro %}
+
+{% macro accordionItem(id, name, products, cat) -%}
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseCat{{id}}" aria-expanded="false" aria-controls="collapseCat{{id}}">
+            {{id}} . {{ name }}
+        </button>
+    </h2>
+    <div id="collapseCat{{id}}" class="accordion-collapse collapse " aria-labelledby="headingOne"
+         data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <div class="b-cwp-body-inner-pad" style="display: table;">
+                {{ sideFilter(cat) }}
+                <div class="b-cwp-bi-main">
+                    <div class="b-catalog-top-info b-no-border">
+                        <div class="b-pagehead"><span class="b-head">Процесори</span></div>
+                        <div class="b-catalog-top-info-meta clearfix">
+                            <div class="b-cat-sortmore dropdown" data-orderby="popular"
+                                 data-orderway="desc">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    Кнопка выпадающего списка
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownSortMode">
+
+                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="popular"
+                                           data-orderway="desc" href="javascript: void(0);"><span>за популярністю</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                           data-orderway="asc"
+                                           href="javascript: void(0);"><span>від дешевих до дорогих</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                           data-orderway="desc"
+                                           href="javascript: void(0);"><span>від дорогих до дешевих</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="name"
+                                           data-orderway="asc" href="javascript: void(0);"><span>по найменуванню</span></a>
+                                    </li>
+                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="discount"
+                                           data-orderway="desc" href="javascript: void(0);"><span>за знижкою</span></a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <ul class="b-cwp-bi-result-list">
+                            {% for product in products %}
+                            {{ productCard(product) }}
+                            {% endfor %}
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
+
+
+{% extends 'base.html' %}
+{% block title %}
+<title>shop</title>
+{% endblock %}
+
+{% block content %}
+
+<!-- ====== Banner Start ====== -->
+<section class="ud-page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ud-banner-content">
+                    <h1>Конфігуратор комп'ютера</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ====== Banner End ====== -->
+<main>
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="b-config-head-fscr-mob">
+                <div class="b-head">Збірка конфігурації ПК з нуля</div>
+
+            </div>
+            <div class="accordion" id="accordionExample">
+                {% for cat in allCategories %}
+                {{ accordionItem(cat.CategoryId, cat.CategoryName, cat.products, cat) }}
+                {% endfor %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Процесор
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="b-cwp-body-inner-pad" style="display: table;">
+                                <div class="b-cwp-bi-side">
+                                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseOne"
+                                                        aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                                    Виробник
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseOne"
+                                                 class="accordion-collapse collapse show"
+                                                 aria-labelledby="panelsStayOpen-headingOne">
+                                                <div class="accordion-body">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Default checkbox
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            Checked checkbox
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseTwo"
+                                                        aria-expanded="false"
+                                                        aria-controls="panelsStayOpen-collapseTwo">
+                                                    Кількість ядер
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                                 aria-labelledby="panelsStayOpen-headingTwo">
+                                                <div class="accordion-body">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Default checkbox
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            Checked checkbox
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#panelsStayOpen-collapseThree"
+                                                        aria-expanded="false"
+                                                        aria-controls="panelsStayOpen-collapseThree">
+                                                    Тип роз'єму (socket)
+                                                </button>
+                                            </h2>
+                                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                                                 aria-labelledby="panelsStayOpen-headingThree">
+                                                <div class="accordion-body">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckDefault">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Default checkbox
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                               id="flexCheckChecked" checked>
+                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                            Checked checkbox
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary">Застосувати</button>
+                                    </div>
+                                </div>
+                                <div class="b-cwp-bi-main">
+                                    <div class="b-catalog-top-info b-no-border">
+                                        <div class="b-pagehead"><span class="b-head">Процесори</span></div>
+                                        <div class="b-catalog-top-info-meta clearfix">
+                                            <div class="b-cat-sortmore dropdown" data-orderby="popular"
+                                                 data-orderway="desc">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                    Кнопка выпадающего списка
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownSortMode">
+
+                                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="popular"
+                                                           data-orderway="desc" href="javascript: void(0);"><span>за популярністю</span></a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                           data-orderway="asc" href="javascript: void(0);"><span>від дешевих до дорогих</span></a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                           data-orderway="desc" href="javascript: void(0);"><span>від дорогих до дешевих</span></a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="name"
+                                                           data-orderway="asc" href="javascript: void(0);"><span>по найменуванню</span></a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" rel="nofollow" data-orderby="discount"
+                                                           data-orderway="desc" href="javascript: void(0);"><span>за знижкою</span></a>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        <ul class="b-cwp-bi-result-list">
+                                            <li class="b-item" data-id_product="264933" data-price="5979">
+                                                <div class="b-cng-item-prod product_wrapper" data-id_product="264933"
+                                                     data-prod-id="264933" data-prod-articul="264933"
+                                                     data-prod-name="AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)"
+                                                     data-prod-brand="AMD" data-prod-variant=""
+                                                     data-prod-type="Процессоры" data-prod-category="Процессоры/AMD"
+                                                     data-prod-price="5979" data-prod-list="Конфигуратор"
+                                                     data-prod-position="">
+                                                    <div class="b-cngip-pic">
+                                                        <a href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/"
+                                                           target="_blank">
+                                                            <img src="https://img.telemart.ua/264933-528644-cart_medium/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031.png"
+                                                                 width="100" height="100"
+                                                                 alt="Фото Процесор AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)">
+                                                        </a>
+                                                    </div>
+                                                    <div class="b-cngip-mid-col">
+                                                        <div class="meta hidden"></div>
+                                                        <div class="b-cngip-head"><a target="_blank"
+                                                                                     href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/">AMD
+                                                            Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)</a>
+                                                        </div>
+                                                        <div class="b-cngip-mc-meta">
+                                                            <div class="b-i-product-articul">Код: <i>1</i></div>
+                                                            <div class="b-cngip-short-chars">
+                                                                <p>Виробник: <a href="/processor/filter/amd-ryzen-r5/"
+                                                                                target="_blank">Default checkbox</a><br>Роз'єм
+                                                                    процесора (Socket): <a
+                                                                            href="/processor/filter/socket-am4/"
+                                                                            target="_blank">AM4</a><br>Кількість ядер:
+                                                                    <a href="/processor/filter/core-6/" target="_blank">6
+                                                                        ядер</a><br>Інтегрована графіка: Без вбудованої
+                                                                    графіки<br>Сумісність: <a
+                                                                            href="/motherboard/filter/socket-am4/"
+                                                                            target="_blank">Материнські плати Socket
+                                                                        AM4</a><br></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="b-cngip-meta-col">
+                                                        <div class="b-cngip-price">5 979 <i>грн</i></div>
+                                                    </div>
+                                                    <div class="b-cngip-meta-btn">
+                                                        <ul class="b-htconf-btns-list">
+                                                            <li>
+                                                                <a class="b-cngip-btn-add add_assembly_product"
+                                                                   href="javascript: AlertMsg();">Додати</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Материнська плата
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="b-cwp-body-inner-pad" style="display: table;">
+                                    <div class="b-cwp-bi-side">
+                                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                                    <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseOne"
+                                                            aria-expanded="true"
+                                                            aria-controls="panelsStayOpen-collapseOne">
+                                                        Виробник
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseOne"
+                                                     class="accordion-collapse collapse show"
+                                                     aria-labelledby="panelsStayOpen-headingOne">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseTwo"
+                                                            aria-expanded="false"
+                                                            aria-controls="panelsStayOpen-collapseTwo">
+                                                        Кількість ядер
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                                     aria-labelledby="panelsStayOpen-headingTwo">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseThree"
+                                                            aria-expanded="false"
+                                                            aria-controls="panelsStayOpen-collapseThree">
+                                                        Тип роз'єму (socket)
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseThree"
+                                                     class="accordion-collapse collapse"
+                                                     aria-labelledby="panelsStayOpen-headingThree">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary">Застосувати</button>
+                                        </div>
+                                    </div>
+                                    <div class="b-cwp-bi-main">
+                                        <div class="b-catalog-top-info b-no-border">
+                                            <div class="b-pagehead"><span class="b-head">Материнська плата</span></div>
+                                            <div class="b-catalog-top-info-meta clearfix">
+                                                <div class="b-cat-sortmore dropdown" data-orderby="popular"
+                                                     data-orderway="desc">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        Кнопка выпадающего списка
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownSortMode">
+
+                                                        <li><a class="dropdown-item" rel="nofollow"
+                                                               data-orderby="popular" data-orderway="desc"
+                                                               href="javascript: void(0);"><span>за популярністю</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                               data-orderway="asc" href="javascript: void(0);"><span>від дешевих до дорогих</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                               data-orderway="desc" href="javascript: void(0);"><span>від дорогих до дешевих</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="name"
+                                                               data-orderway="asc" href="javascript: void(0);"><span>по найменуванню</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow"
+                                                               data-orderby="discount" data-orderway="desc"
+                                                               href="javascript: void(0);"><span>за знижкою</span></a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                            <ul class="b-cwp-bi-result-list">
+                                                <li class="b-item" data-id_product="264933" data-price="5979">
+                                                    <div class="b-cng-item-prod product_wrapper"
+                                                         data-id_product="264933" data-prod-id="264933"
+                                                         data-prod-articul="264933"
+                                                         data-prod-name="AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)"
+                                                         data-prod-brand="AMD" data-prod-variant=""
+                                                         data-prod-type="Процессоры" data-prod-category="Процессоры/AMD"
+                                                         data-prod-price="5979" data-prod-list="Конфигуратор"
+                                                         data-prod-position="">
+                                                        <div class="b-cngip-pic">
+                                                            <a href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/"
+                                                               target="_blank">
+                                                                <img src="https://img.telemart.ua/264933-528644-cart_medium/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031.png"
+                                                                     width="100" height="100"
+                                                                     alt="Фото Процесор AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)">
+                                                            </a>
+                                                        </div>
+                                                        <div class="b-cngip-mid-col">
+                                                            <div class="meta hidden"></div>
+                                                            <div class="b-cngip-head"><a target="_blank"
+                                                                                         href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/">AMD
+                                                                Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray
+                                                                (100-000000031)</a></div>
+                                                            <div class="b-cngip-mc-meta">
+                                                                <div class="b-i-product-articul">Код: <i>1</i></div>
+                                                                <div class="b-cngip-short-chars">
+                                                                    <p>Виробник: <a
+                                                                            href="/processor/filter/amd-ryzen-r5/"
+                                                                            target="_blank">Default checkbox</a><br></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="b-cngip-meta-col">
+                                                            <div class="b-cngip-price">5 979 <i>грн</i></div>
+                                                        </div>
+                                                        <div class="b-cngip-meta-btn">
+                                                            <ul class="b-htconf-btns-list">
+                                                                <li>
+                                                                    <a class="b-cngip-btn-add add_assembly_product"
+                                                                       href="javascript: void(0);">Додати</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Відеокарта
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="b-cwp-body-inner-pad" style="display: table;">
+                                    <div class="b-cwp-bi-side">
+                                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                                    <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseOne"
+                                                            aria-expanded="true"
+                                                            aria-controls="panelsStayOpen-collapseOne">
+                                                        Виробник
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseOne"
+                                                     class="accordion-collapse collapse show"
+                                                     aria-labelledby="panelsStayOpen-headingOne">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseTwo"
+                                                            aria-expanded="false"
+                                                            aria-controls="panelsStayOpen-collapseTwo">
+                                                        Кількість ядер
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                                                     aria-labelledby="panelsStayOpen-headingTwo">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsStayOpen-collapseThree"
+                                                            aria-expanded="false"
+                                                            aria-controls="panelsStayOpen-collapseThree">
+                                                        Тип роз'єму (socket)
+                                                    </button>
+                                                </h2>
+                                                <div id="panelsStayOpen-collapseThree"
+                                                     class="accordion-collapse collapse"
+                                                     aria-labelledby="panelsStayOpen-headingThree">
+                                                    <div class="accordion-body">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                Default checkbox
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckChecked" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                                Checked checkbox
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary">Застосувати</button>
+                                        </div>
+                                    </div>
+                                    <div class="b-cwp-bi-main">
+                                        <div class="b-catalog-top-info b-no-border">
+                                            <div class="b-pagehead"><span class="b-head">Відеокарта</span></div>
+                                            <div class="b-catalog-top-info-meta clearfix">
+                                                <div class="b-cat-sortmore dropdown" data-orderby="popular"
+                                                     data-orderway="desc">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        Кнопка выпадающего списка
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownSortMode">
+
+                                                        <li><a class="dropdown-item" rel="nofollow"
+                                                               data-orderby="popular" data-orderway="desc"
+                                                               href="javascript: void(0);"><span>за популярністю</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                               data-orderway="asc" href="javascript: void(0);"><span>від дешевих до дорогих</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="price"
+                                                               data-orderway="desc" href="javascript: void(0);"><span>від дорогих до дешевих</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow" data-orderby="name"
+                                                               data-orderway="asc" href="javascript: void(0);"><span>по найменуванню</span></a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" rel="nofollow"
+                                                               data-orderby="discount" data-orderway="desc"
+                                                               href="javascript: void(0);"><span>за знижкою</span></a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                            <ul class="b-cwp-bi-result-list">
+                                                <li class="b-item" data-id_product="264933" data-price="5979">
+                                                    <div class="b-cng-item-prod product_wrapper"
+                                                         data-id_product="264933" data-prod-id="264933"
+                                                         data-prod-articul="264933"
+                                                         data-prod-name="AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)"
+                                                         data-prod-brand="AMD" data-prod-variant=""
+                                                         data-prod-type="Процессоры" data-prod-category="Процессоры/AMD"
+                                                         data-prod-price="5979" data-prod-list="Конфигуратор"
+                                                         data-prod-position="">
+                                                        <div class="b-cngip-pic">
+                                                            <a href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/"
+                                                               target="_blank">
+                                                                <img src="https://img.telemart.ua/264933-528644-cart_medium/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031.png"
+                                                                     width="100" height="100"
+                                                                     alt="Фото Процесор AMD Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray (100-000000031)">
+                                                            </a>
+                                                        </div>
+                                                        <div class="b-cngip-mid-col">
+                                                            <div class="meta hidden"></div>
+                                                            <div class="b-cngip-head"><a target="_blank"
+                                                                                         href="/products/amd-ryzen-5-3600-3642ghz-32mb-sam4-tray-100-000000031/">AMD
+                                                                Ryzen 5 3600 3.6(4.2)GHz 32MB sAM4 Tray
+                                                                (100-000000031)</a></div>
+                                                            <div class="b-cngip-mc-meta">
+                                                                <div class="b-i-product-articul">Код: <i>1</i></div>
+                                                                <div class="b-cngip-short-chars">
+                                                                    <p>Виробник: <a
+                                                                            href="/processor/filter/amd-ryzen-r5/"
+                                                                            target="_blank">Default checkbox</a><br><br>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="b-cngip-meta-col">
+                                                            <div class="b-cngip-price">5 979 <i>грн</i></div>
+                                                        </div>
+                                                        <div class="b-cngip-meta-btn">
+                                                            <ul class="b-htconf-btns-list">
+                                                                <li>
+                                                                    <a class="b-cngip-btn-add add_assembly_product"
+                                                                       href="javascript: void(0);">Додати</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+</main>
+{% endblock %}
